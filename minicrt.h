@@ -48,6 +48,8 @@ int minicrt_fprintf(FILE* stream, const char* format, ...);
 void minicrt_do_global_ctors();
 void minicrt_call_exit_routine();
 
+typedef void (*cxa_func_t)(void *);
+int __cxa_atexit(cxa_func_t func, void* arg, void *);
 // atexit
 typedef void (*atexit_func_t)(void);
 int atexit(atexit_func_t func);

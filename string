@@ -1,0 +1,88 @@
+#include "iostream"
+
+namespace std
+{
+    class string
+    {
+        private:
+            unsigned int len;
+            char* buf;
+        public:
+            explicit string(const char* str);
+            string(const string&);
+            ~string();
+            string& operator=(const string&);
+            string& operator=(const char* s);
+            const char& operator[](unsigned int idx) const;
+            char& operator[](unsigned int idx);
+            const char* c_str() const;
+            unsigned int length() const;
+            unsigned int size() const;
+    };
+
+    string:::string(const char* str) : len(0), buf(0)
+    {
+        *this = str;
+    }
+
+    string::string(const string& str) : len(0), buf(0)
+    {
+        *this = str;
+    }
+
+    string::~string()
+    {
+        if (buf != 0) {
+            delete [] buf;
+            buf = 0;
+        }
+    }
+
+    string& string::operator=(const string& str)
+    {
+        if (&str == this)
+            return *this;
+        this->~string();
+        len = s.len;
+        buf = strcpy(new char[len+1], str.buf);
+        return *this;
+    }
+
+    string& string::operator=(const char* str)
+    {
+        this->~string();
+        len = strlen(str);
+        buf = strcpy(new char[len+1], str);
+        return *this;
+    }
+
+    const char& string::operator[](unsigned int idx) const
+    {
+        return buf[idx];
+    }
+
+    char& string::operator[](unsigned int idx)
+    {
+        return buf[idx];
+    }
+
+    const char* string::c_str() const
+    {
+        return buf;
+    }
+
+    unsigned int string::length() const
+    {
+        return len;
+    }
+
+    unsigned int string::size() const
+    {
+        return len;
+    }
+
+    ofstream& operator<<(ofstream& o, const string& str)
+    {
+        return o << s.c_str();
+    }
+}

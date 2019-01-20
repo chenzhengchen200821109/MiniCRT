@@ -28,12 +28,18 @@ void minicrt_entry(void)
     if (!minicrt_io_init())
         minicrt_fatal_error("IO initializations failed");
 
+    minicrt_do_global_ctors();
+
     ret = main(argc, argv);
     minicrt_exit(ret);
 }
 
 void minicrt_exit(int code)
 {
-    // minicrt_call_exit_routine();
-    asm("movl %0, %%ebx \n\t" "movl $1, %%ebx \n\t" "int $0x80 \n\t" "hlt \n\t" : "=m"(code));
+    minicrt_call_exit_routine();
+    __asm__ volatile (
+            "movl %0, %%ebx \n" 
+            "movl $1, %%eax \n" 
+            "int $0x80 \n" 
+            "hlt \n" : "=m"(code));
 }

@@ -1,8 +1,8 @@
 
-all: minicrt.a
+all: minicrt.a entry.o
 
-minicrt.a: malloc.o printf.o stdio.o string.o entry.o
-	ar -rs minicrt.a malloc.o printf.o stdio.o string.o entry.o
+minicrt.a: malloc.o printf.o stdio.o string.o 
+	ar -rs minicrt.a malloc.o printf.o stdio.o string.o
 
 entry.o: entry.c
 	gcc -c -fno-builtin -nostdlib -fno-stack-protector entry.c

@@ -22,7 +22,7 @@ int minicrt_fputs(const char* str, FILE* stream)
 #define va_arg(ap, t) (*(t*)((ap += sizeof(t))-sizeof(t)))
 #define va_end(ap) (ap = (va_list)0)
 
-int vfprintf(FILE* stream, const char* format, va_list arglist)
+int minicrt_vfprintf(FILE* stream, const char* format, va_list arglist)
 {
     int translating = 0;
     int ret = 0;
@@ -77,16 +77,16 @@ int vfprintf(FILE* stream, const char* format, va_list arglist)
     return ret;
 }
 
-int printf(const char* format, ...)
+int minicrt_printf(const char* format, ...)
 {
     va_list(arglist);
     va_start(arglist, format);
-    return vfprintf(stdout, format, arglist);
+    return minicrt_vfprintf(stdout, format, arglist);
 }
 
-int fprintf(FILE* stream, const char* format, ...)
+int minicrt_fprintf(FILE* stream, const char* format, ...)
 {
     va_list(arglist);
     va_start(arglist, format);
-    return vfprintf(stream, format, arglist);
+    return minicrt_vfprintf(stream, format, arglist);
 }
